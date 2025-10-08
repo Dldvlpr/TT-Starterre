@@ -12,6 +12,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use App\DTO\PersonContactDTO;
 use App\DTO\CompanyContactDTO;
+use App\Service\CSVService;
 
 final class ContactController extends AbstractController
 {
@@ -23,7 +24,12 @@ final class ContactController extends AbstractController
     }
 
     #[Route('/contact/submit', name: 'contact_submit', methods: ['POST'])]
-    public function submitContact(Request $request, ValidatorInterface $validator, CsrfTokenManagerInterface $csrfTokenManager): JsonResponse
+    public function submitContact(
+        Request $request,
+        ValidatorInterface $validator,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        CSVService $csvService,
+    ): JsonResponse
     {
         try {
             $data = json_decode($request->getContent(), true);
@@ -50,6 +56,8 @@ final class ContactController extends AbstractController
                     'errors' => $this->formatErrors($errors)
                 ], 400);
             }
+
+            $csvService->save($dto, $isCompany);
 
             return $this->json([
                 'message' => 'Contact enregistré avec succès',
