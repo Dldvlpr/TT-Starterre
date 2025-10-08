@@ -68,27 +68,41 @@ class ContactFormValidator {
     validateAll(data) {
         this.errors.clear();
 
-        const requiredFields = ['name', 'lastname', 'email', 'phone', 'address', 'postal_code', 'city'];
+        const isCompanyForm = document.getElementById('company').checked;
 
+        let requiredFields;
+        if (isCompanyForm) {
+            requiredFields = ['siret', 'company_name', 'company_email', 'company_phone', 'company_address', 'company_postal_code', 'company_city'];
+        } else {
+            requiredFields = ['name', 'lastname', 'email', 'phone', 'address', 'postal_code', 'city'];
+
+            if (!data.gender) {
+                this.errors.set('gender', 'Veuillez sélectionner votre genre');
+            } else if (!['male', 'female'].includes(data.gender)) {
+                this.errors.set('gender', 'Genre invalide');
+            }
+        }
         requiredFields.forEach(field => {
             if (!data[field] || data[field].trim() === '') {
                 this.errors.set(field, 'Ce champ est requis');
             }
         });
-        if (data.email && !this.isValidEmail(data.email)) {
-            this.errors.set('email', 'Format invalide');
-        }
-        if (data.phone && !this.isValidPhone(data.phone)) {
-            this.errors.set('phone', 'Format invalide');
-        }
-        if (data.postal_code && !this.isValidPostalCode(data.postal_code)) {
-            this.errors.set('postal_code', 'Code postal invalide (5 chiffres)');
+        const emailField = isCompanyForm ? 'company_email' : 'email';
+        if (data[emailField] && !this.isValidEmail(data[emailField])) {
+            this.errors.set(emailField, 'Format email invalide');
         }
 
-        if (!data.gender) {
-            this.errors.set('gender', 'Veuillez sélectionner votre genre');
-        } else if (!['male', 'female'].includes(data.gender)) {
-            this.errors.set('gender', 'Genre invalide');
+        const phoneField = isCompanyForm ? 'company_phone' : 'phone';
+        if (data[phoneField] && !this.isValidPhone(data[phoneField])) {
+            this.errors.set(phoneField, 'Format téléphone invalide');
+        }
+
+        const postalField = isCompanyForm ? 'company_postal_code' : 'postal_code';
+        if (data[postalField] && !this.isValidPostalCode(data[postalField])) {
+            this.errors.set(postalField, 'Code postal invalide (5 chiffres)');
+        }
+        if (isCompanyForm && data.siret && !this.isValidSiret(data.siret)) {
+            this.errors.set('siret', 'SIRET invalide (14 chiffres)');
         }
 
         return this.errors.size === 0;
@@ -104,6 +118,10 @@ class ContactFormValidator {
 
     isValidPostalCode(postalCode) {
         return /^\d{5}$/.test(postalCode);
+    }
+
+    isValidSiret(siret) {
+        return /^\d{14}$/.test(siret.replace(/\s/g, ''));
     }
 
     clearErrors = () => {

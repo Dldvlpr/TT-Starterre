@@ -98,7 +98,63 @@
                                 </div>
                             </div>
                             <div id="company-form" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="siret" class="form-label">Siret *</label>
+                                            <input type="text" class="form-control" id="siret" name="siret"
+                                                   required placeholder="Votre siret">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="company_name" class="form-label">Raison sociale *</label>
+                                            <input type="text" class="form-control" id="company_name" name="company_name" required
+                                                   placeholder="Nom de votre société">
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="form-group mb-3">
+                                    <label for="company_email" class="form-label">Adresse e-mail *</label>
+                                    <input type="email" class="form-control" id="company_email" name="company_email" required
+                                           placeholder="votre@email.com">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="company_phone" class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" id="company_phone" name="company_phone" required
+                                           placeholder="01 23 45 67 89">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="company_address" class="form-label">Adresse *</label>
+                                    <input type="text" class="form-control" id="company_address" name="company_address" required
+                                           placeholder="Votre adresse complète">
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label for="company_postal_code" class="form-label">Code postal *</label>
+                                            <input type="text" class="form-control" id="company_postal_code" name="company_postal_code"
+                                                   required placeholder="75000" pattern="[0-9]{5}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group mb-3">
+                                            <label for="company_city" class="form-label">Ville *</label>
+                                            <input type="text" class="form-control" id="company_city" name="company_city" required
+                                                   placeholder="Votre ville">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Envoyer
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
