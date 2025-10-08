@@ -19,6 +19,11 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+###> webpack encore ###
+/node_modules/
+/public/build/
+###< webpack encore ###
+
 ###> other ###
 .idea
 ###< other ###
