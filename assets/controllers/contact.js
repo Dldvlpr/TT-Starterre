@@ -8,6 +8,8 @@ class ContactFormValidator {
     init() {
         if (!this.form) return;
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+        this.setupFormToggle();
     }
 
     async handleSubmit(e) {
@@ -160,6 +162,28 @@ class ContactFormValidator {
             console.error('Erreur:', error);
             alert('Une erreur est survenue. Veuillez réessayer.');
         }
+    }
+
+    setupFormToggle() {
+        const personRadio = document.getElementById('person');
+        const companyRadio = document.getElementById('company');
+        const personForm = document.getElementById('person-form');
+        const companyForm = document.getElementById('company-form');
+
+        const toggleForms = () => {
+            if (personRadio.checked) {
+                personForm.style.display = 'block';
+                companyForm.style.display = 'none';
+            } else if (companyRadio.checked) {
+                companyForm.style.display = 'block';
+                personForm.style.display = 'none';
+            }
+        };
+
+        personRadio.addEventListener('change', toggleForms);
+        companyRadio.addEventListener('change', toggleForms);
+
+        toggleForms();
     }
 }
 

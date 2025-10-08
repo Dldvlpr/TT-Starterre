@@ -12,69 +12,93 @@
                     </div>
                     <div class="card-body p-4">
                         <form novalidate>
-                            <div class="form-group mb-3">
-                                <label class="form-label mb-2">Genre</label>
-                                <div class="d-flex justify-content-center">
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" id="male" name="gender" value="male">
-                                        <label class="form-check-label" for="male">Homme</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input" id="female" name="gender" value="female">
-                                        <label class="form-check-label" for="female">Femme</label>
-                                    </div>
+                            <div class="form-group mb-4 text-center">
+                                <label class="form-label mb-3">Je suis :</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="contact_type" id="person" value="person" checked>
+                                    <label class="btn btn-outline-primary" for="person">Une personne</label>
+
+                                    <input type="radio" class="btn-check" name="contact_type" id="company" value="company">
+                                    <label class="btn btn-outline-primary" for="company">Une société</label>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label for="lastname" class="form-label">Prénom *</label>
-                                        <input type="text" class="form-control" id="lastname" name="lastname" required placeholder="Votre prénom">
+                            <div id="person-form">
+                                <div class="form-group mb-3">
+                                    <label class="form-label mb-2">Genre</label>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" id="male" name="gender"
+                                                   value="male">
+                                            <label class="form-check-label" for="male">Homme</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" id="female" name="gender"
+                                                   value="female">
+                                            <label class="form-check-label" for="female">Femme</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label for="name" class="form-label">Nom *</label>
-                                        <input type="text" class="form-control" id="name" name="name" required placeholder="Votre nom">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="lastname" class="form-label">Prénom *</label>
+                                            <input type="text" class="form-control" id="lastname" name="lastname"
+                                                   required placeholder="Votre prénom">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="name" class="form-label">Nom *</label>
+                                            <input type="text" class="form-control" id="name" name="name" required
+                                                   placeholder="Votre nom">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group mb-3">
-                                <label for="email" class="form-label">Adresse e-mail *</label>
-                                <input type="email" class="form-control" id="email" name="email" required placeholder="votre@email.com">
-                            </div>
+                                <div class="form-group mb-3">
+                                    <label for="email" class="form-label">Adresse e-mail *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required
+                                           placeholder="votre@email.com">
+                                </div>
 
-                            <div class="form-group mb-3">
-                                <label for="phone" class="form-label">Téléphone *</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" required placeholder="01 23 45 67 89">
-                            </div>
+                                <div class="form-group mb-3">
+                                    <label for="phone" class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required
+                                           placeholder="01 23 45 67 89">
+                                </div>
 
-                            <div class="form-group mb-3">
-                                <label for="address" class="form-label">Adresse *</label>
-                                <input type="text" class="form-control" id="address" name="address" required placeholder="Votre adresse complète">
-                            </div>
+                                <div class="form-group mb-3">
+                                    <label for="address" class="form-label">Adresse *</label>
+                                    <input type="text" class="form-control" id="address" name="address" required
+                                           placeholder="Votre adresse complète">
+                                </div>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group mb-3">
-                                        <label for="postal_code" class="form-label">Code postal *</label>
-                                        <input type="text" class="form-control" id="postal_code" name="postal_code" required placeholder="75000" pattern="[0-9]{5}">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label for="postal_code" class="form-label">Code postal *</label>
+                                            <input type="text" class="form-control" id="postal_code" name="postal_code"
+                                                   required placeholder="75000" pattern="[0-9]{5}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group mb-3">
+                                            <label for="city" class="form-label">Ville *</label>
+                                            <input type="text" class="form-control" id="city" name="city" required
+                                                   placeholder="Votre ville">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="form-group mb-3">
-                                        <label for="city" class="form-label">Ville *</label>
-                                        <input type="text" class="form-control" id="city" name="city" required placeholder="Votre ville">
-                                    </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Envoyer
+                                    </button>
                                 </div>
                             </div>
+                            <div id="company-form" style="display: none;">
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-paper-plane me-2"></i>Envoyer
-                                </button>
                             </div>
                         </form>
                     </div>
