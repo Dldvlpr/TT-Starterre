@@ -8,7 +8,7 @@ class ContactFormValidator {
     init() {
         if (!this.form) return;
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-
+        this.postalCodeAutoComplete();
         this.setupFormToggle();
     }
 
@@ -204,6 +204,40 @@ class ContactFormValidator {
         companyRadio.addEventListener('change', toggleForms);
 
         toggleForms();
+    }
+
+    postalCodeAutoComplete() {
+        const postalCodeField = document.getElementById('postalCode');
+        const companyPostalCodeField = document.getElementById('companyPostalCode');
+
+        if (postalCodeField) {
+            postalCodeField.addEventListener('input', (e) => {
+                this.handlePostalCodeInput(e.target, 'city');
+            });
+        }
+    }
+
+    async handlePostalCodeInput(postalField, cityFieldId) {
+        const postalCode = postalField.value.trim();
+
+        if (postalCode < 5) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://geo.api.gouv.fr/communes?codePostal=${postalCode}&fields=nom`);
+            const communes = await response.json();
+
+            if (communes.length === 1) {
+                const cityField = document.getElementById(cityFieldId);
+                if (cityField) {
+                    cityField.value = communes[0].nom;
+                }
+            }
+
+        } catch (error) {
+            console.log('Erreur API Géo:', error);
+        }
     }
 }
 
