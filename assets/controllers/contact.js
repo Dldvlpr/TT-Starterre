@@ -14,7 +14,6 @@ class ContactFormValidator {
 
     async handleSubmit(e) {
         e.preventDefault();
-
         this.clearErrors();
 
         const data = this.collectAndSanitizeData();
@@ -164,7 +163,7 @@ class ContactFormValidator {
 
     async submitToServer(data) {
         try {
-            const response = await fetch('/contact', {
+            const response = await fetch('/contact/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -173,14 +172,14 @@ class ContactFormValidator {
                 body: JSON.stringify(data)
             });
 
+            const result = await response.json();
+
             if (response.ok) {
-                alert('Message envoyé avec succès !');
                 this.form.reset();
             } else {
-                throw new Error('Erreur serveur');
+                throw new Error(result.error || 'Erreur serveur');
             }
         } catch (error) {
-            console.error('Erreur:', error);
             alert('Une erreur est survenue. Veuillez réessayer.');
         }
     }
