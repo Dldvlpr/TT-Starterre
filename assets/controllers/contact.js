@@ -50,14 +50,17 @@ class ContactFormValidator {
 
         switch (fieldName) {
             case 'phone':
+            case 'companyPhone':
                 sanitized = sanitized.replace(/[^\d\s\.\-\+]/g, '');
                 break;
 
-            case 'postal_code':
+            case 'postalCode':
+            case 'companyPostalCode':
                 sanitized = sanitized.replace(/\D/g, '');
                 break;
 
             case 'email':
+            case 'companyEmail':
                 sanitized = sanitized.toLowerCase();
                 break;
         }
@@ -72,9 +75,9 @@ class ContactFormValidator {
 
         let requiredFields;
         if (isCompanyForm) {
-            requiredFields = ['siret', 'company_name', 'company_email', 'company_phone', 'company_address', 'company_postal_code', 'company_city'];
+            requiredFields = ['siret', 'companyName', 'companyEmail', 'companyPhone', 'companyAddress', 'companyPostalCode', 'companyCity'];
         } else {
-            requiredFields = ['name', 'lastname', 'email', 'phone', 'address', 'postal_code', 'city'];
+            requiredFields = ['name', 'lastname', 'email', 'phone', 'address', 'postalCode', 'city'];
 
             if (!data.gender) {
                 this.errors.set('gender', 'Veuillez sélectionner votre genre');
@@ -87,17 +90,17 @@ class ContactFormValidator {
                 this.errors.set(field, 'Ce champ est requis');
             }
         });
-        const emailField = isCompanyForm ? 'company_email' : 'email';
+        const emailField = isCompanyForm ? 'companyEmail' : 'email';
         if (data[emailField] && !this.isValidEmail(data[emailField])) {
             this.errors.set(emailField, 'Format email invalide');
         }
 
-        const phoneField = isCompanyForm ? 'company_phone' : 'phone';
+        const phoneField = isCompanyForm ? 'companyPhone' : 'phone';
         if (data[phoneField] && !this.isValidPhone(data[phoneField])) {
             this.errors.set(phoneField, 'Format téléphone invalide');
         }
 
-        const postalField = isCompanyForm ? 'company_postal_code' : 'postal_code';
+        const postalField = isCompanyForm ? 'companyPostalCode' : 'postalCode';
         if (data[postalField] && !this.isValidPostalCode(data[postalField])) {
             this.errors.set(postalField, 'Code postal invalide (5 chiffres)');
         }
