@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,15 +16,26 @@ use App\DTO\PersonContactDTO;
 use App\DTO\CompanyContactDTO;
 use App\Service\CSVService;
 
+/**
+ * Contrôleur pour la gestion du formulaire de contact.
+ */
 final class ContactController extends AbstractController
 {
+    /**
+     * Affiche le formulaire de contact.
+     */
     #[Route('/contact', name: 'contact_form', methods: ['GET'])]
     public function index(): Response
     {
-
-        return $this->render('contact/index.html.twig', []);
+        return $this->render('contact/index.html.twig', [
+            'insee_api_key' => $_ENV['INSEE_API_KEY'] ?? ''
+        ]);
     }
 
+    /**
+     * Soumission du formulaire de contact.
+     * @param CSVService $csvService Service de sauvegarde CSV
+     */
     #[Route('/contact/submit', name: 'contact_submit', methods: ['POST'])]
     public function submitContact(
         Request $request,
@@ -70,6 +83,9 @@ final class ContactController extends AbstractController
         }
     }
 
+    /**
+     * Formate les erreurs de validation pour la réponse JSON.
+     */
     private function formatErrors($errors): array
     {
         $formattedErrors = [];

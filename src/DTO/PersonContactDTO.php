@@ -5,6 +5,12 @@ namespace App\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * DTO d'une personne physique.
+ *
+ * Contient toutes les informations d'une personne
+ * avec validation intégrée via les contraintes Symfony.
+ */
 readonly class PersonContactDTO
 {
     public function __construct(
@@ -43,6 +49,10 @@ readonly class PersonContactDTO
     {
     }
 
+    /**
+     * @param array $data Données du formulaire
+     * @return self Instance du DTO
+     */
     public static function fromArray(array $data): self
     {
         return new self(

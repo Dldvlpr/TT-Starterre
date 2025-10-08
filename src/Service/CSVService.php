@@ -5,14 +5,29 @@ namespace App\Service;
 
 use App\DTO\PersonContactDTO;
 use App\DTO\CompanyContactDTO;
+
+/**
+ * Gère la création et l'écriture de fichiers CSV
+ * pour les personnes physiques et les sociétés.
+ */
 class CSVService
 {
     private string $contactsDirectory;
 
+    /**
+     * @param string $projectDir racine du projet
+     */
     public function __construct(string $projectDir)
     {
         $this->contactsDirectory = $projectDir . '/var/contacts';
     }
+
+    /**
+     * Sauvegarde un contact en CSV.
+     *
+     * @param PersonContactDTO|CompanyContactDTO $dto DTO du contact à sauvegarder
+     * @param bool $isCompany True si c'est une société, false si c'est une personne
+     */
     public function save(PersonContactDTO|CompanyContactDTO $dto, bool $isCompany): void
     {
         $this->ensureDirectoryExists();
@@ -37,6 +52,9 @@ class CSVService
         }
     }
 
+    /**
+     * S'assure que le répertoire de stockage existe.
+     */
     private function ensureDirectoryExists(): void
     {
         if (!is_dir($this->contactsDirectory)) {
@@ -46,12 +64,22 @@ class CSVService
         }
     }
 
+    /**
+     * Retourne le nom du fichier CSV selon le type de contact.
+     *
+     * @param bool $isCompany True pour companies.csv, false pour persons.csv
+     * @return string Chemin complet du fichier CSV
+     */
     private function getFilename(bool $isCompany): string
     {
         $type = $isCompany ? 'companies' : 'persons';
         return $this->contactsDirectory . "/{$type}.csv";
     }
 
+    /**
+     * @param resource $file Handle du fichier CSV ouvert
+     * @param bool $isCompany True pour les en-têtes société, false pour personne
+     */
     private function writeHeaders($file, bool $isCompany): void
     {
         if ($isCompany) {
@@ -82,6 +110,13 @@ class CSVService
         fputcsv($file, $headers);
     }
 
+    /**
+     * Écrit les données du contact dans le CSV.
+     *
+     * @param resource $file Handle du fichier CSV ouvert
+     * @param PersonContactDTO|CompanyContactDTO $dto DTO contenant les données
+     * @param bool $isCompany True pour société, false pour personne
+     */
     private function writeContactData($file, PersonContactDTO|CompanyContactDTO $dto, bool $isCompany): void
     {
         $timestamp = date('Y-m-d H:i:s');

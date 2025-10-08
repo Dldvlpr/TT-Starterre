@@ -5,6 +5,12 @@ namespace App\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * DTO société.
+ *
+ * Contient les informations nécessaires pour une entreprise
+ * avec validation intégrée.
+ */
 readonly class CompanyContactDTO
 {
     public function __construct(
@@ -38,6 +44,10 @@ readonly class CompanyContactDTO
     {
     }
 
+    /**
+     * @param array $data Données du formulaire
+     * @return self Instance du DTO
+     */
     public static function fromArray(array $data): self
     {
         return new self(

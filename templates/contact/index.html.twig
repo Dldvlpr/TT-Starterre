@@ -167,5 +167,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        window.INSEE_API_KEY = '{{ insee_api_key }}';
+    </script>
     {{ encore_entry_script_tags('contact') }}
 {% endblock %}

@@ -9,6 +9,7 @@ class ContactFormValidator {
         if (!this.form) return;
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
         this.postalCodeAutoComplete();
+        this.companyAutoComplete();
         this.setupFormToggle();
     }
 
@@ -206,9 +207,18 @@ class ContactFormValidator {
         toggleForms();
     }
 
+    companyAutoComplete() {
+        const siretField = document.getElementById('siret');
+
+        if (siretField) {
+            siretField.addEventListener('input', (e) => {
+                this.handleCompanyDataInput(e.target);
+            });
+        }
+    }
+
     postalCodeAutoComplete() {
         const postalCodeField = document.getElementById('postalCode');
-        const companyPostalCodeField = document.getElementById('companyPostalCode');
 
         if (postalCodeField) {
             postalCodeField.addEventListener('input', (e) => {
@@ -237,6 +247,31 @@ class ContactFormValidator {
 
         } catch (error) {
             console.log('Erreur API Géo:', error);
+        }
+    }
+
+    async handleCompanyDataInput(siretField) {
+        const siret = siretField.value.replace(/\s/g, '');
+
+        if (siret.length < 14) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://api.insee.fr/api-sirene/3.11/siret/${siret}`, {
+                headers: {
+                    'X-INSEE-Api-Key-Integration': window.INSEE_API_KEY || ''
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.etablissement) {
+                const company = data.etablissement;
+            }
+
+        } catch (error) {
+            console.log('Erreur API INSEE:', error);
         }
     }
 }
